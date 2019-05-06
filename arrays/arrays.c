@@ -60,7 +60,7 @@ void resize_array(Array *arr) {
   char **new_elements = calloc(new_capacity, sizeof(char *));
   
   // Copy elements into the new storage
-  for (int i = 0; i < arr->count; i++) {
+  for (int i = 0; i <arr->count; i++) {
     new_elements[i] = arr -> elements[i];
   }
 
@@ -122,7 +122,11 @@ void arr_append(Array *arr, char *element) {
 
   // Resize the array if the number of elements is over capacity
   // or throw an error if resize isn't implemented yet.
+<<<<<<< HEAD
   if (arr->elements >= arr->capacity)
+=======
+  if (sizeof(arr) + 1 > sizeof(arr->capacity))
+>>>>>>> 75fd4f88240eba03b7306c0c7284036040cdcebe
   {
       resize_array(arr);
   } else
