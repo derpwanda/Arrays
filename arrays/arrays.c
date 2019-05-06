@@ -65,9 +65,6 @@ void resize_array(Array *arr) {
   }
 
   // Free the old elements array (but NOT the strings they point to)
-  for (int i = 0; i < arr->count; i++) {
-    free(arr -> elements[i]);    
-  }
   free(arr -> elements);
 
   // Update the elements and capacity to new values
