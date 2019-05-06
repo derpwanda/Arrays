@@ -93,7 +93,6 @@ char *arr_read(Array *arr, int index) {
     fprintf(stderr, "the index is greater or equal to the count");
   }else {
   // Otherwise, return the element at the given index
-    
   }
 }
 
