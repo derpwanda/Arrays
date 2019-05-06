@@ -65,6 +65,9 @@ void resize_array(Array *arr) {
   }
 
   // Free the old elements array (but NOT the strings they point to)
+  for (int i = 0; i < arr->count; i++) {
+    free(arr -> elements[i]);    
+  }
   free(arr -> elements);
 
   // Update the elements and capacity to new values
@@ -120,7 +123,7 @@ void arr_append(Array *arr, char *element) {
   // or throw an error if resize isn't implemented yet.
   if (sizeof(element) > sizeof(arr))
   {
-    //resize_array
+      resize_array(arr);
   } else
   {
       fprintf(stderr, "there isn't enough space!");
