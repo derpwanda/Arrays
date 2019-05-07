@@ -110,15 +110,15 @@ void arr_insert(Array *arr, char *element, int index) {
     // return NULL;    
   }
   // Resize the array if the number of elements is over capacity
-  if (arr -> count > arr -> capacity)
+  if (arr -> count >= arr -> capacity)
   {
     resize_array(arr);
   }
   // Move every element after the insert index to the right one position
   int i;
-  for (i = 0; i < arr -> count; i++)
+  for (i = index; i < arr -> count; i++) //make i the index to start there
   {
-    arr -> elements[i + 1] = arr -> elements[i];
+    arr -> elements[i] = arr -> elements[i + 1];
   }
   // Copy the element and add it to the array
   arr -> elements[index] = element;
