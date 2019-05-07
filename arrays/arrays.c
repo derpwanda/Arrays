@@ -116,12 +116,12 @@ void arr_insert(Array *arr, char *element, int index) {
   }
   // Move every element after the insert index to the right one position
   int i;
-  for (i = index; i < arr -> count; i++) //make i the index to start there
+  for (i = arr -> count; i > index; i--) //make i the index to start there
   {
-    arr -> elements[i] = arr -> elements[i + 1];
+    arr -> elements[i] = arr -> elements[i - 1];
   }
   // Copy the element and add it to the array
-  arr -> elements[index] = element;
+  arr -> elements[index] = strdup(element);
   // Increment count by 1
   arr -> count++;
 }
@@ -136,11 +136,7 @@ void arr_append(Array *arr, char *element) {
   if (arr->count >= arr->capacity)
   {
       resize_array(arr);
-  } /* else
-  {
-      fprintf(stderr, "there isn't enough space!\n");
-  } */
-  
+  }   
   // Copy the element and add it to the end of the array
   arr -> elements[arr -> count] = strdup(element);
   // arr -> elements[arr -> count] = element;
@@ -190,12 +186,12 @@ int main(void)
   arr_insert(arr, "STRING1", 0);
   arr_append(arr, "STRING4");
   arr_insert(arr, "STRING2", 0);
-  // arr_insert(arr, "STRING3", 1);
+  arr_insert(arr, "STRING3", 1);
   arr_print(arr);
   // arr_remove(arr, "STRING3");
   // arr_print(arr);
 
-  // destroy_array(arr);
+  destroy_array(arr);
 
   return 0;
 }
