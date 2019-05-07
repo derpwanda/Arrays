@@ -154,21 +154,24 @@ void arr_remove(Array *arr, char *element) {
 
   // Search for the first occurence of the element and remove it.
   // Don't forget to free its memory!
+  // https://www.programmingsimplified.com/c/source-code/c-program-delete-element-from-array
   int i;
+  int position;
   for (i = 0; i < arr->count; i++)
   {
     if(arr->elements[i] = element)
     {
+      position = arr->elements[i];
       arr->elements[i] = ; //how to delete? 
       free(arr->elements[i]);   
     }
+    // Shift over every element after the removed element to the left one position
+    for (i = position; i<arr->count; i++) //i want to start at the index
+    {
+      arr->elements[i] = arr->elements[i+1];
+    }
   }
 
-  // Shift over every element after the removed element to the left one position
-  for (i = ?; i<arr->count; i++) //i want to start at the index
-  {
-    arr->elements[i] = arr->elements[i+1];
-  }
   // Decrement count by 1
   arr->count--;
 }
