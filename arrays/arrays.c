@@ -41,11 +41,11 @@ void destroy_array(Array *arr) {
 
   // Free all elements
   for (int i = 0; i < arr->count; i++) {
-    free(arr -> elements[i]);    
+    free(arr -> elements[i]);  //frees chars in elements  
   }
-  free(arr -> elements);
+  free(arr -> elements); //frees elements arrays
 
-  // Free array
+  // Free larger array
   free(arr);
 }
 
@@ -115,11 +115,15 @@ void arr_insert(Array *arr, char *element, int index) {
     resize_array(arr);
   }
   // Move every element after the insert index to the right one position
-
+  int i;
+  for (i = 0; i < arr -> count; i++)
+  {
+    arr -> elements[i + 1] = arr -> elements[i];
+  }
   // Copy the element and add it to the array
   arr -> elements[index] = element;
   // Increment count by 1
-  arr -> count+;+
+  arr -> count++;
 }
 
 /*****
@@ -131,7 +135,7 @@ void arr_append(Array *arr, char *element) {
   // or throw an error if resize isn't implemented yet.
   if (arr->count >= arr->capacity)
   {
-      return resize_array(arr);
+      resize_array(arr);
   } /* else
   {
       fprintf(stderr, "there isn't enough space!\n");
@@ -186,12 +190,12 @@ int main(void)
   arr_insert(arr, "STRING1", 0);
   arr_append(arr, "STRING4");
   arr_insert(arr, "STRING2", 0);
-  arr_insert(arr, "STRING3", 1);
+  // arr_insert(arr, "STRING3", 1);
   arr_print(arr);
-  arr_remove(arr, "STRING3");
-  arr_print(arr);
+  // arr_remove(arr, "STRING3");
+  // arr_print(arr);
 
-  destroy_array(arr);
+  // destroy_array(arr);
 
   return 0;
 }
