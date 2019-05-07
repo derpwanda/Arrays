@@ -60,7 +60,7 @@ void resize_array(Array *arr) {
   char **new_elements = calloc(new_capacity, sizeof(char *));
   
   // Copy elements into the new storage
-  for (int i = 0; i <arr->count; i++) {
+  for (int i = 0; i < arr->count; i++) {
     new_elements[i] = arr -> elements[i];
   }
 
@@ -89,11 +89,12 @@ void resize_array(Array *arr) {
 char *arr_read(Array *arr, int index) {
 
   // Throw an error if the index is greater or equal to than the current count
-  if (arr ->elements[index] >= arr -> count){
+  if ( index >= arr -> count){
     fprintf(stderr, "the index is greater or equal to the count");
-  }else {
-  // Otherwise, return the element at the given index
+    return NULL;
   }
+  // Otherwise, return the element at the given index
+    return arr -> elements[index];
 }
 
 
@@ -103,15 +104,22 @@ char *arr_read(Array *arr, int index) {
 void arr_insert(Array *arr, char *element, int index) {
 
   // Throw an error if the index is greater than the current count
-
+  if (index > arr -> count)
+  {
+    fprintf(stderr, "the index is greater or equal to the count");
+    // return NULL;    
+  }
   // Resize the array if the number of elements is over capacity
-
+  if (arr -> count > arr -> capacity)
+  {
+    resize_array(arr);
+  }
   // Move every element after the insert index to the right one position
 
   // Copy the element and add it to the array
-
+  arr -> elements[index] = element;
   // Increment count by 1
-
+  arr -> count+;+
 }
 
 /*****
@@ -121,20 +129,17 @@ void arr_append(Array *arr, char *element) {
 
   // Resize the array if the number of elements is over capacity
   // or throw an error if resize isn't implemented yet.
-<<<<<<< HEAD
-  if (arr->elements >= arr->capacity)
-=======
-  if (sizeof(arr) + 1 > sizeof(arr->capacity))
->>>>>>> 75fd4f88240eba03b7306c0c7284036040cdcebe
+  if (arr->count >= arr->capacity)
   {
-      resize_array(arr);
-  } else
+      return resize_array(arr);
+  } /* else
   {
-      fprintf(stderr, "there isn't enough space!");
-  }
+      fprintf(stderr, "there isn't enough space!\n");
+  } */
   
   // Copy the element and add it to the end of the array
   arr -> elements[arr -> count] = strdup(element);
+  // arr -> elements[arr -> count] = element;
   // Increment count by 1
   arr -> count++;
 }
