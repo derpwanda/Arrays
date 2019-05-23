@@ -41,11 +41,11 @@ void destroy_array(Array *arr) {
 
   // Free all elements
   for (int i = 0; i < arr->count; i++) {
-    free(arr -> elements[i]);    
+    free(arr -> elements[i]);  //frees chars in elements  
   }
-  free(arr -> elements);
+  free(arr -> elements); //frees elements arrays
 
-  // Free array
+  // Free larger array
   free(arr);
 }
 
@@ -60,7 +60,7 @@ void resize_array(Array *arr) {
   char **new_elements = calloc(new_capacity, sizeof(char *));
   
   // Copy elements into the new storage
-  for (int i = 0; i <arr->count; i++) {
+  for (int i = 0; i < arr->count; i++) {
     new_elements[i] = arr -> elements[i];
   }
 
@@ -89,12 +89,12 @@ void resize_array(Array *arr) {
 char *arr_read(Array *arr, int index) {
 
   // Throw an error if the index is greater or equal to than the current count
-  if (arr ->elements[index] >= arr -> count){
+  if ( index >= arr -> count){
     fprintf(stderr, "the index is greater or equal to the count");
-  }else {
-  // Otherwise, return the element at the given index
-    
+    return NULL;
   }
+  // Otherwise, return the element at the given index
+    return arr -> elements[index];
 }
 
 
@@ -104,15 +104,26 @@ char *arr_read(Array *arr, int index) {
 void arr_insert(Array *arr, char *element, int index) {
 
   // Throw an error if the index is greater than the current count
-
+  if (index > arr -> count)
+  {
+    fprintf(stderr, "the index is greater or equal to the count");
+    // return NULL;    
+  }
   // Resize the array if the number of elements is over capacity
-
+  if (arr -> count >= arr -> capacity)
+  {
+    resize_array(arr);
+  }
   // Move every element after the insert index to the right one position
-
+  int i;
+  for (i = arr -> count; i > index; i--) //make i the index to start there
+  {
+    arr -> elements[i] = arr -> elements[i - 1];
+  }
   // Copy the element and add it to the array
-
+  arr -> elements[index] = strdup(element);
   // Increment count by 1
-
+  arr -> count++;
 }
 
 /*****
@@ -122,20 +133,13 @@ void arr_append(Array *arr, char *element) {
 
   // Resize the array if the number of elements is over capacity
   // or throw an error if resize isn't implemented yet.
-<<<<<<< HEAD
-  if (arr->elements >= arr->capacity)
-=======
-  if (sizeof(arr) + 1 > sizeof(arr->capacity))
->>>>>>> 75fd4f88240eba03b7306c0c7284036040cdcebe
+  if (arr->count >= arr->capacity)
   {
       resize_array(arr);
-  } else
-  {
-      fprintf(stderr, "there isn't enough space!");
-  }
-  
+  }   
   // Copy the element and add it to the end of the array
   arr -> elements[arr -> count] = strdup(element);
+  // arr -> elements[arr -> count] = element;
   // Increment count by 1
   arr -> count++;
 }
@@ -150,11 +154,25 @@ void arr_remove(Array *arr, char *element) {
 
   // Search for the first occurence of the element and remove it.
   // Don't forget to free its memory!
+  // https://www.programmingsimplified.com/c/source-code/c-program-delete-element-from-array
 
+  int position = 0;
+  for (int i = 0; i < arr->count; i++)
+  {
+    if(strcmp(arr->elements[i], element) == 0)
+    {
+      position = i;
+      arr->elements[i] = NULL; //how to delete? 
+      free(arr->elements[i]);      
+    }
+  }
   // Shift over every element after the removed element to the left one position
-
+  for (int i = position; i<arr->count; i++) //i want to start at the index
+  {
+    arr->elements[i] = arr->elements[i+1];
+  }
   // Decrement count by 1
-
+  arr->count--;
 }
 
 
@@ -192,3 +210,4 @@ int main(void)
   return 0;
 }
 #endif
+
